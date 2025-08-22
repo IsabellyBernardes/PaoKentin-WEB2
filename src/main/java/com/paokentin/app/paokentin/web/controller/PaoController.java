@@ -41,4 +41,15 @@ public class PaoController {
         Pao novoPao = paoService.cadastrarPao(pao);
         return new ResponseEntity<>(novoPao, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Pao> atualizarPao(@PathVariable Integer id, @RequestBody Pao pao) {
+        try {
+            Pao paoAtualizado = paoService.atualizarPao(id, pao);
+            return ResponseEntity.ok(paoAtualizado); // Retorna 200 OK com o pão atualizado
+        } catch (RuntimeException e) {
+            // Se o serviço lançar a exceção (pão não encontrado), retornamos 404.
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

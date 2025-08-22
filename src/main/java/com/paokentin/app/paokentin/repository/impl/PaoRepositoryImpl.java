@@ -49,6 +49,30 @@ public class PaoRepositoryImpl implements PaoRepository {
     }
 
     @Override
+    public Pao update(Pao pao) {
+        // Atualizaremos todos os campos para o pão com o ID correspondente.
+        String sql = "UPDATE Pao SET nome = ?, descricao = ?, tempo_preparo_minutos = ?, cor_hex = ? WHERE id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, pao.getNome());
+            ps.setString(2, pao.getDescricao());
+            ps.setInt(3, pao.getTempoPreparoMinutos());
+            ps.setString(4, pao.getCorHex());
+            ps.setInt(5, pao.getId());
+
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Falha ao atualizar o pão, ID não encontrado: " + pao.getId());
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar o pão no banco de dados", e);
+        }
+        return pao;
+    }
+
+    @Override
     public Optional<Pao> findById(Integer id) {
         String sql = "SELECT id, nome, descricao, tempo_preparo_minutos, cor_hex FROM Pao WHERE id = ?";
 

@@ -27,6 +27,23 @@ public class PaoServiceImpl implements PaoService {
     }
 
     @Override
+    @Transactional
+    public Pao atualizarPao(Integer id, Pao paoAtualizado) {
+        // Primeiro, garante que o pão existe antes de tentar atualizá-lo.
+        Pao paoExistente = paoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pão com ID " + id + " não encontrado."));
+
+        // Atualiza os dados do objeto existente com os novos dados
+        paoExistente.setNome(paoAtualizado.getNome());
+        paoExistente.setDescricao(paoAtualizado.getDescricao());
+        paoExistente.setTempoPreparoMinutos(paoAtualizado.getTempoPreparoMinutos());
+        paoExistente.setCorHex(paoAtualizado.getCorHex());
+
+        // Salva o objeto atualizado no banco
+        return paoRepository.update(paoExistente);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<Pao> listarTodos() {
         return paoRepository.findAll();

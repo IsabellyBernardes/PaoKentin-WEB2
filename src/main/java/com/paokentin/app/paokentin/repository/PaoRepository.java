@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface PaoRepository {
 
     Pao save(Pao pao);
-
+    Pao update(Pao pao);
     Optional<Pao> findById(Integer id);
 
     List<Pao> findAll();
