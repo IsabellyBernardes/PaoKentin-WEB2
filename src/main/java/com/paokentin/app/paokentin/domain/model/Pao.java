@@ -8,11 +8,9 @@ public class Pao {
     private int tempoPreparoMinutos;
     private String corHex;
 
-    // Construtor padrão (obrigatório para muitas bibliotecas)
     public Pao() {
     }
 
-    // Construtor completo para facilitar a criação de objetos
     public Pao(Integer id, String nome, String descricao, int tempoPreparoMinutos) {
         this.id = id;
         this.nome = nome;
@@ -21,7 +19,6 @@ public class Pao {
         this.corHex = corHex;
     }
 
-    // Getters e Setters para todos os atributos
     public Integer getId() {
         return id;
     }

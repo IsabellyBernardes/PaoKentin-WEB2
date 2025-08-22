@@ -21,13 +21,9 @@ public class ClienteController {
         this.fornadaService = fornadaService;
     }
 
-    /**
-     * Endpoint para o cliente consultar o status de todas as últimas fornadas.
-     * Mapeado para GET /api/cliente/status-fornadas
-     */
     @GetMapping("/status-fornadas")
     public ResponseEntity<List<FornadaStatusDTO>> obterStatusDasFornadas() {
         List<FornadaStatusDTO> statusList = fornadaService.consultarStatusDasFornadas();
-        return ResponseEntity.ok(statusList); // Retorna 200 OK com a lista de status
+        return ResponseEntity.ok(statusList);
     }
 }

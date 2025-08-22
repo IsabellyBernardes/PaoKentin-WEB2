@@ -21,15 +21,13 @@ public class PaoServiceImpl implements PaoService {
     }
 
     @Override
-    @Transactional // Garante que a operação seja atômica
+    @Transactional
     public Pao cadastrarPao(Pao pao) {
-        // Aqui poderíamos adicionar regras de negócio.
-        // Ex: if (paoRepository.existsByNome(pao.getNome())) { throw new RegraDeNegocioException("Pão já cadastrado!"); }
         return paoRepository.save(pao);
     }
 
     @Override
-    @Transactional(readOnly = true) // Otimização para operações de leitura
+    @Transactional(readOnly = true)
     public List<Pao> listarTodos() {
         return paoRepository.findAll();
     }

@@ -21,18 +21,12 @@ public class PadeiroController {
         this.fornadaService = fornadaService;
     }
 
-    /**
-     * Endpoint para o padeiro registrar uma nova fornada.
-     * Mapeado para POST /api/padeiro/fornada/{paoId}
-     * @param paoId O ID do pão que está entrando no forno.
-     */
     @PostMapping("/fornada/{paoId}")
     public ResponseEntity<Fornada> iniciarFornada(@PathVariable Integer paoId) {
         try {
             Fornada novaFornada = fornadaService.registrarInicioFornada(paoId);
             return new ResponseEntity<>(novaFornada, HttpStatus.CREATED);
         } catch (RuntimeException e) {
-            // Se o serviço lançar a exceção (pão não encontrado), retornamos 404.
             return ResponseEntity.notFound().build();
         }
     }

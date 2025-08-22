@@ -1,29 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Referências aos Elementos do DOM ---
+
     const container = document.getElementById('botoes-pao-container');
     const btnVerStatus = document.getElementById('btn-ver-status');
 
-    // Modal de Feedback (para registro de fornada)
+
     const feedbackModalElement = document.getElementById('feedbackModal');
     const feedbackModalHeader = document.getElementById('feedbackModalHeader');
     const feedbackModalBody = document.getElementById('feedbackModalBody');
     const feedbackModal = new bootstrap.Modal(feedbackModalElement);
 
-    // Modal de Status (para ver fornadas ativas)
+
     const statusModalElement = document.getElementById('statusModal');
     const statusModalBody = document.getElementById('statusModalBody');
     const statusModal = new bootstrap.Modal(statusModalElement);
 
-    // Variável de controle para o contador de tempo real do modal de status
+
     let statusIntervalId = null;
 
-    // --- Funções Auxiliares ---
-
-    /**
-     * Calcula se a cor do texto sobre um fundo hexadecimal deve ser preta ou branca.
-     * @param {string} hexcolor - A cor de fundo em formato hexadecimal (ex: '#FF5733').
-     * @returns {'black'|'white'}
-     */
     function getContrastYIQ(hexcolor){
         hexcolor = hexcolor.replace("#", "");
         const r = parseInt(hexcolor.substr(0,2),16);
@@ -33,11 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return (yiq >= 128) ? 'black' : 'white';
     }
 
-    /**
-     * Formata um total de segundos para o formato MM:SS.
-     * @param {number} totalSegundos - O total de segundos a ser formatado.
-     * @returns {string} O tempo formatado.
-     */
+
     function formatarTempoRestante(totalSegundos) {
         if (totalSegundos <= 0) return '00:00';
         const minutos = Math.floor(totalSegundos / 60);
@@ -46,13 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return `${pad(minutos)}:${pad(segundos)}`;
     }
 
-    // --- Funções Principais ---
-
-    /**
-     * Exibe o modal de feedback com uma mensagem de sucesso ou erro.
-     * @param {string} mensagem - A mensagem a ser exibida.
-     * @param {boolean} sucesso - True para sucesso (verde), false para erro (vermelho).
-     */
     function mostrarFeedback(mensagem, sucesso = true) {
         feedbackModalBody.textContent = mensagem;
         if (sucesso) {
@@ -65,9 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
         feedbackModal.show();
     }
 
-    /**
-     * Busca os pães cadastrados na API e cria os botões na tela.
-     */
     async function carregarBotoesDePao() {
         try {
             const response = await fetch('/api/paes');
@@ -84,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.className = 'btn btn-lg w-100 btn-pao';
                 button.textContent = pao.nome;
 
-                // Aplica a cor personalizada vinda da API
                 if (pao.corHex) {
                     button.style.backgroundColor = pao.corHex;
                     button.style.borderColor = pao.corHex;
@@ -105,11 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    /**
-     * Envia uma requisição para registrar uma nova fornada.
-     * @param {number} paoId - O ID do pão da fornada.
-     * @param {string} nomePao - O nome do pão, para usar na mensagem de feedback.
-     */
     async function registrarFornada(paoId, nomePao) {
         try {
             const response = await fetch(`/api/padeiro/fornada/${paoId}`, { method: 'POST' });
@@ -124,9 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    /**
-     * Busca o status das fornadas ativas e as exibe no modal de status.
-     */
     async function visualizarFornadasAtivas() {
         try {
             const response = await fetch('/api/cliente/status-fornadas');
@@ -160,8 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Lógica do Contador em Tempo Real ---
-
     function iniciarContadorStatus() {
         if (statusIntervalId) clearInterval(statusIntervalId);
         statusIntervalId = setInterval(() => {
@@ -189,15 +157,10 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(statusIntervalId);
     }
 
-    // --- Inicialização e Event Listeners ---
-
-    // Associa a função de visualização ao clique do botão
     btnVerStatus.addEventListener('click', visualizarFornadasAtivas);
 
-    // Controla o início e o fim do contador baseado na visibilidade do modal de status
     statusModalElement.addEventListener('shown.bs.modal', iniciarContadorStatus);
     statusModalElement.addEventListener('hidden.bs.modal', pararContadorStatus);
 
-    // Carrega os botões principais ao iniciar a página
     carregarBotoesDePao();
 });

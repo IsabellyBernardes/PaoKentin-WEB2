@@ -32,20 +32,15 @@ public class FornadaServiceImpl implements FornadaService {
     @Override
     @Transactional
     public Fornada registrarInicioFornada(Integer paoId) {
-        // 1. Busca o pão no banco de dados para garantir que ele existe.
         Pao pao = paoRepository.findById(paoId)
                 .orElseThrow(() -> new RuntimeException("Pão com ID " + paoId + " não encontrado."));
 
-        // 2. Cria um novo objeto Fornada.
         Fornada novaFornada = new Fornada();
         novaFornada.setPao(pao);
         novaFornada.setDataHoraInicio(LocalDateTime.now()); // Pega a data e hora exatas do servidor.
 
-        // 3. Salva a nova fornada no banco.
         return fornadaRepository.save(novaFornada);
     }
-
-    // Remova os imports do ZoneId e ZonedDateTime se não forem mais usados em outro lugar
 
     @Override
     @Transactional(readOnly = true)
@@ -53,7 +48,6 @@ public class FornadaServiceImpl implements FornadaService {
         List<Fornada> ultimasFornadas = fornadaRepository.findLatestForEachPao();
         List<FornadaStatusDTO> statusList = new ArrayList<>();
 
-        // Pega a hora atual. Simples.
         LocalDateTime agora = LocalDateTime.now();
 
         final int JANELA_DE_FRESCOR_EM_MINUTOS = 60;
@@ -66,7 +60,6 @@ public class FornadaServiceImpl implements FornadaService {
             LocalDateTime horaPrevistaParaFicarPronto = horaInicio.plusMinutes(tempoPreparo);
             LocalDateTime horaDeExpiracao = horaPrevistaParaFicarPronto.plusMinutes(JANELA_DE_FRESCOR_EM_MINUTOS);
 
-            // A lógica de expiração
             if (agora.isAfter(horaDeExpiracao)) {
                 continue;
             }

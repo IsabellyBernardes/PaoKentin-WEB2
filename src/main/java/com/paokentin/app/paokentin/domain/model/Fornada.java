@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class Fornada {
 
     private Integer id;
-    private Pao pao; // Relação com a entidade Pao
+    private Pao pao;
     private LocalDateTime dataHoraInicio;
 
     public Fornada() {

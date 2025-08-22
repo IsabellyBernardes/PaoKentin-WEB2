@@ -43,7 +43,6 @@ public class FornadaRepositoryImpl implements FornadaRepository {
     @Override
     public List<Fornada> findLatestForEachPao() {
         List<Fornada> ultimasFornadas = new ArrayList<>();
-        // Query alternativa usando subquery para encontrar o ID da última fornada de cada pão.
         String sql = """
         SELECT
             f.id AS fornada_id,
@@ -74,7 +73,6 @@ public class FornadaRepositoryImpl implements FornadaRepository {
 
                 Fornada fornada = new Fornada();
                 fornada.setId(rs.getInt("fornada_id"));
-                // Esta é a linha crítica. Vamos garantir que ela funcione.
                 fornada.setDataHoraInicio(rs.getTimestamp("data_hora_inicio").toLocalDateTime());
                 fornada.setPao(pao);
 

@@ -19,7 +19,6 @@ public class PaoRepositoryImpl implements PaoRepository {
 
     @Override
     public Pao save(Pao pao) {
-        // 1. Adiciona a coluna cor_hex no comando INSERT
         String sql = "INSERT INTO Pao (nome, descricao, tempo_preparo_minutos, cor_hex) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
@@ -28,7 +27,6 @@ public class PaoRepositoryImpl implements PaoRepository {
             ps.setString(1, pao.getNome());
             ps.setString(2, pao.getDescricao());
             ps.setInt(3, pao.getTempoPreparoMinutos());
-            // 2. Define o valor para a nova coluna cor_hex
             ps.setString(4, pao.getCorHex());
 
             int affectedRows = ps.executeUpdate();
@@ -52,7 +50,6 @@ public class PaoRepositoryImpl implements PaoRepository {
 
     @Override
     public Optional<Pao> findById(Integer id) {
-        // Usar '*' aqui funciona, mas ser explícito é uma boa prática
         String sql = "SELECT id, nome, descricao, tempo_preparo_minutos, cor_hex FROM Pao WHERE id = ?";
 
         try (Connection conn = dataSource.getConnection();
@@ -67,7 +64,6 @@ public class PaoRepositoryImpl implements PaoRepository {
                     pao.setNome(rs.getString("nome"));
                     pao.setDescricao(rs.getString("descricao"));
                     pao.setTempoPreparoMinutos(rs.getInt("tempo_preparo_minutos"));
-                    // 3. Mapeia a coluna cor_hex do banco para o objeto Pao
                     pao.setCorHex(rs.getString("cor_hex"));
                     return Optional.of(pao);
                 }

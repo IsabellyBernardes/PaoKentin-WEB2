@@ -6,18 +6,14 @@ import java.time.LocalDateTime;
 
 public class FornadaStatusDTO {
 
-    // Informações do Pão
     private String nomePao;
     private String descricaoPao;
 
-    // Status da Fornada
     private String status; // Ex: "Assando" ou "Pronto"
     private LocalDateTime horaPrevistaParaFicarPronto;
 
-    // O contador para o front-end
     private long tempoRestanteSegundos;
 
-    // Getters e Setters
     public String getNomePao() {
         return nomePao;
     }

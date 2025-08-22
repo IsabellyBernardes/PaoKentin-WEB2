@@ -1,9 +1,8 @@
-// Função para formatar o tempo (adiciona um zero à esquerda se for menor que 10)
 function formatarTempo(tempo) {
     return tempo < 10 ? '0' + tempo : tempo;
 }
 
-// Função principal que busca os dados da API e atualiza a tela
+
 async function buscarStatusFornadas() {
     const container = document.getElementById('fornadas-container');
 
@@ -14,7 +13,6 @@ async function buscarStatusFornadas() {
         }
         const fornadas = await response.json();
 
-        // Limpa o container antes de adicionar os novos cards
         container.innerHTML = '';
 
         if (fornadas.length === 0) {
@@ -68,11 +66,9 @@ async function buscarStatusFornadas() {
     }
 }
 
-let intervalId = null; // Variável para controlar o intervalo do contador
+let intervalId = null;
 
-// Função para atualizar os contadores a cada segundo
 function iniciarContadores() {
-    // Limpa qualquer intervalo anterior para evitar múltiplos contadores rodando
     if (intervalId) {
         clearInterval(intervalId);
     }
@@ -80,7 +76,7 @@ function iniciarContadores() {
     intervalId = setInterval(() => {
         const contadores = document.querySelectorAll('.countdown');
         if (contadores.length === 0) {
-            clearInterval(intervalId); // Para o intervalo se não houver mais contadores
+            clearInterval(intervalId);
             return;
         }
 
@@ -89,29 +85,25 @@ function iniciarContadores() {
 
             if (totalSegundos > 0) {
                 totalSegundos--;
-                elem.dataset.segundosRestantes = totalSegundos; // Atualiza o atributo data-*
+                elem.dataset.segundosRestantes = totalSegundos;
 
                 const minutos = Math.floor(totalSegundos / 60);
                 const segundos = totalSegundos % 60;
                 elem.textContent = `Tempo Restante: ${formatarTempo(minutos)}:${formatarTempo(segundos)}`;
             } else {
-                // Quando o tempo acabar, busca os dados novamente para atualizar o status para "Pronto"
                 buscarStatusFornadas().then(iniciarContadores);
             }
         });
     }, 1000);
 }
 
-
-// Função de inicialização
 async function initCliente() {
     await buscarStatusFornadas();
     iniciarContadores();
     setInterval(async () => {
         await buscarStatusFornadas();
         iniciarContadores();
-    }, 30000); // Atualiza os dados da API a cada 30 segundos
+    }, 30000);
 }
 
-// Chama a função de inicialização quando a página carregar
 document.addEventListener('DOMContentLoaded', initCliente);
