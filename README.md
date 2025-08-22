@@ -1,18 +1,17 @@
 
-================================================================
-SCRIPT DE CRIAÇÃO DO BANCO DE DADOS PARA O SISTEMA PÃOKENTIN
-================================================================
+
+# SCRIPT DE CRIAÇÃO DO BANCO DE DADOS PARA O SISTEMA PÃOKENTIN
 
 
--- Opcional: Se precisar criar o banco de dados.
--- CREATE DATABASE PaoKentinDB;
--- GO
+ -- Opcional: Se precisar criar o banco de dados.
+ * CREATE DATABASE PaoKentinDB;
+ * GO
 
 -- Garante que todos os comandos seguintes serão executados no contexto do banco correto.
-USE PaoKentinDB;
-GO
+* USE PaoKentinDB;
+* GO
 
--- ========= CRIAÇÃO DAS TABELAS =========
+## ========= CRIAÇÃO DAS TABELAS =========
 
 CREATE TABLE Pao (
 id INT PRIMARY KEY IDENTITY(1,1),
@@ -32,7 +31,7 @@ CONSTRAINT FK_Fornada_Pao FOREIGN KEY (pao_id) REFERENCES Pao(id)
 GO
 
 
--- ========= INSERÇÃO DE DADOS INICIAIS =========
+## ========= INSERÇÃO DE DADOS INICIAIS =========
 
 PRINT 'Inserindo dados iniciais na tabela Pao...';
 INSERT INTO Pao (nome, descricao, tempo_preparo_minutos, cor_hex) VALUES
