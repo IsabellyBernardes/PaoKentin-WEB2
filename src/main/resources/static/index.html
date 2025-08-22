@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo ao PãoKentin!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilo para centralizar o conteúdo verticalmente e dar um fundo bonito */
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f5d020, #f5a623); /* Um gradiente com tons de pão/dourado */
+        }
+        /* Estilização do card principal */
+        .portal-card {
+            max-width: 600px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9); /* Fundo branco semi-transparente */
+            backdrop-filter: blur(10px); /* Efeito de vidro fosco para navegadores modernos */
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        /* Efeito de hover nos cards de link */
+        .link-card {
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+        }
+        .link-card .card-body {
+            text-align: center;
+        }
+        .link-card .icon {
+            font-size: 3rem;
+        }
+    </style>
+</head>
+<body>
+<div class="portal-card p-4 p-md-5">
+    <div class="text-center mb-4">
+        <h1 class="display-4">🍞 PãoKentin</h1>
+        <p class="lead">Seu pão quentinho na hora certa! Chega a manteiga derreteeee</p>
+        <hr>
+    </div>
+
+    <h3 class="text-center mb-4">Como você quer entrar?</h3>
+
+    <div class="row">
+        <div class="col-md-6 mb-3 mb-md-0">
+            <a href="/cliente.html" class="link-card">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <div class="icon">😋</div>
+                        <h5 class="card-title mt-3">Ver Fornadas</h5>
+                        <p class="card-text">Quero saber se o pão saiu!</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6">
+            <a href="/padeiro.html" class="link-card">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <div class="icon">👨‍🍳</div>
+                        <h5 class="card-title mt-3">Área do Padeiro</h5>
+                        <p class="card-text">Registrar uma nova fornada.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
